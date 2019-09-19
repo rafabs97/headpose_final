@@ -1,7 +1,8 @@
 Human head pose estimation using Keras over TensorFlow
 ======================================================
 
-Human head pose estimation using Keras over TensorFlow, based on the architectures on the following article:
+Work by Rafael Berral-Soler, directed by Manuel J. Marin-Jimenez and Francisco J. Madrid-Cuevas. 
+The pose estimator models developed on this project are based on the architectures on the following article:
 
 ```
 M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutional neural networks and adaptive gradient methods. Pattern Recognition, 71, June 2017.
