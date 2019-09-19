@@ -30,4 +30,4 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
 * Other Python libraries: glob2 (0.7), numpy (1.17.1), pandas (0.25.1), scikit-learn (0.21.3).
 
 ## Acknowledgements
-Picture used in demo by [Ross Broadstock](https://www.flickr.com/people/figurepainting/). Licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) license.
+Picture at top by [Ross Broadstock](https://www.flickr.com/people/figurepainting/). Licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) license.
