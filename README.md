@@ -1,7 +1,11 @@
 Human head pose estimation using Keras over TensorFlow
 ======================================================
 
-Human head pose estimation using Keras over TensorFlow, based on the architectures on the article by Patacchiola et al.
+Human head pose estimation using Keras over TensorFlow, based on the architectures on the following article:
+
+```
+M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutional neural networks and adaptive gradient methods. Pattern Recognition, 71, June 2017.
+```
 
 Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm3jx4ke33/headpose_final.zip?dl=1).
 
