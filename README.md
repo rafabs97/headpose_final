@@ -1,6 +1,8 @@
 Human head pose estimation using Keras over TensorFlow
 ======================================================
 
+Human head pose estimation using Keras over TensorFlow, based on the architectures on the article by Patacchiola et al.
+
 Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm3jx4ke33/headpose_final.zip?dl=1).
 
 ## Notes
@@ -16,3 +18,6 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
 * Keras: Version 2.2.4.
 * OpenCV: Version 4.1.0.25.
 * Other Python libraries: glob2 (0.7), numpy (1.17.1), pandas (0.25.1), scikit-learn (0.21.3).
+
+## Acknowledgements
+Picture used in demo by [Ross Broadstock](https://www.flickr.com/people/figurepainting/). Licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) license.
