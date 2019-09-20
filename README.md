@@ -11,7 +11,7 @@ M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutio
 Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm3jx4ke33/headpose_final.zip?dl=1).
 
 ## Notes
-* In order to use this model, you **MUST** import models/keras_ssd512.py, bounding_box_utils and keras_layers from the Keras implementation of Single-Shot Multibox Detector by Pierluigi Ferrari found [here](https://github.com/pierluigiferrari/ssd_keras). These files must be placed in the root of the cloned repository directory.
+* In order to use this model, you **MUST** import ```models/keras_ssd512.py```, ```bounding_box_utils``` and ```keras_layers``` from the Keras implementation of Single-Shot Multibox Detector by Pierluigi Ferrari found [here](https://github.com/pierluigiferrari/ssd_keras). These files must be placed in the root of the cloned repository directory.
 * The original MatConvNet head detector model can be obtained [here](https://github.com/AVAuco/ssd_people), work by Pablo Medina-Suarez and Manuel J. Marin-Jimenez. It must be placed on the ``models/`` directory on the root of the cloned repository directory, and converted by running the script ``convert_ssd_512.py``.
 * SSD model converter can also be obtained as a standalone software [here](https://github.com/AVAuco/ssd_people_keras).
 * In order to use the model and code included in this repository, it may be useful to update your PYTHONPATH. Provided you cloned this repository at ~/libs/headpose_final:
@@ -26,7 +26,7 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
   ```
   git clone https://github.com/rafabs97/headpose_final <directory>
   ```
-* Place models/keras_ssd512.py, bounding_box_utils and keras_layers from [here](https://github.com/pierluigiferrari/ssd_keras) at the root of the cloned repository directory.
+* Place ```models/keras_ssd512.py```, ```bounding_box_utils``` and ```keras_layers``` from [here](https://github.com/pierluigiferrari/ssd_keras) at the root of the cloned repository directory.
 * Place ```models/head-detector.mat``` from [here](https://github.com/AVAuco/ssd_people) on the ``models/`` directory on the root of the cloned repository directory.
 * Run the script  ``convert_ssd_512.py``.
 * Run the script ``demo_image.py``. The output should match the demo output at the top of this page.
