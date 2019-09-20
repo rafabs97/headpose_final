@@ -28,7 +28,7 @@ estimator_path = models_path + estimator_file
 # Detector parameters.
 
 in_size_detector = 512
-confidence_threshold = 0.65
+confidence_threshold = 0.2
 
 # Estimator parameters.
 
