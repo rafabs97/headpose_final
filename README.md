@@ -20,6 +20,16 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
   export PYTHONPATH=$PYTHONPATH:~/libs/headpose_final/:~/libs/headpose_final/models/
   ```
 
+## Quick Start Guide
+* Clone this repository to a directory of your choice.
+```
+git clone https://github.com/rafabs97/headpose_final <directory>
+```
+* Place models/keras_ssd512.py, bounding_box_utils and keras_layers from [here](https://github.com/pierluigiferrari/ssd_keras) at the root of the cloned repository directory.
+* Place ```models/head-detector.mat``` from [here](https://github.com/AVAuco/ssd_people) on the ``models/`` directory on the root of the cloned repository directory.
+* Run the script  ``convert_ssd_512.py``.
+* Run the script ``demo_image.py``. The output should match the demo output at the top of this page.
+
 ## Software requirements
 * OS: Ubuntu 16.04 or later (and derivatives), Windows 7 or later, macOS 10.12.6 or later (no GPU support).
 * Python: Version 3.6.
@@ -30,4 +40,4 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
 * Other Python libraries: glob2 (0.7), numpy (1.17.1), pandas (0.25.1), scikit-learn (0.21.3).
 
 ## Acknowledgements
-Picture at top by [Ross Broadstock](https://www.flickr.com/people/figurepainting/). Licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) license.
+Picture used in demo by [Ross Broadstock](https://www.flickr.com/people/figurepainting/). Licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) license.
