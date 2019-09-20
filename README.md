@@ -41,5 +41,9 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
 * OpenCV: Version 4.1.0.25.
 * Other Python libraries: glob2 (0.7), numpy (1.17.1), pandas (0.25.1), scikit-learn (0.21.3).
 
+## Video demo
+
+A video processed with this software can be found [here](https://youtu.be/sMPB2xXe8eY).
+
 ## Acknowledgements
 Picture used in demo by [Ross Broadstock](https://www.flickr.com/people/figurepainting/). Licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) license.
