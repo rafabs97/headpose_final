@@ -21,7 +21,7 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
   export PYTHONPATH=$PYTHONPATH:~/libs/headpose_final/:~/libs/headpose_final/models/
   ```
 
-## Quick Start Guide
+## Quick Start guide
 * Clone this repository to a directory of your choice.
 
   ```
