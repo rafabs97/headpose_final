@@ -22,6 +22,7 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
 
 ## Quick Start Guide
 * Clone this repository to a directory of your choice.
+
   ```
   git clone https://github.com/rafabs97/headpose_final <directory>
   ```
