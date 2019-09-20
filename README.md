@@ -47,3 +47,5 @@ A video processed with this software can be found [here](https://youtu.be/sMPB2x
 
 ## Acknowledgements
 Picture used in demo by [Ross Broadstock](https://www.flickr.com/people/figurepainting/). Licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) license.
+
+Original video used in demo by [Bailey Fisher](https://www.youtube.com/channel/UCFBrplvSu0C16ThC11_OoCg).
