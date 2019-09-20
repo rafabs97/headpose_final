@@ -22,9 +22,9 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
 
 ## Quick Start Guide
 * Clone this repository to a directory of your choice.
-```
-git clone https://github.com/rafabs97/headpose_final <directory>
-```
+  ```
+  git clone https://github.com/rafabs97/headpose_final <directory>
+  ```
 * Place models/keras_ssd512.py, bounding_box_utils and keras_layers from [here](https://github.com/pierluigiferrari/ssd_keras) at the root of the cloned repository directory.
 * Place ```models/head-detector.mat``` from [here](https://github.com/AVAuco/ssd_people) on the ``models/`` directory on the root of the cloned repository directory.
 * Run the script  ``convert_ssd_512.py``.
