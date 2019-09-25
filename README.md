@@ -39,7 +39,7 @@ Code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm
 * TensorFlow: with or without GPU support, versión 1.14.0.
 * Keras: Version 2.2.4.
 * OpenCV: Version 4.1.0.25.
-* Other Python libraries: glob2 (0.7), numpy (1.17.1), pandas (0.25.1), scikit-learn (0.21.3).
+* Other Python libraries: glob2 (0.7), numpy (1.17.1), pandas (0.25.1), pillow (6.1.0), scikit-learn (0.21.3).
 
 ## Video demo
 
