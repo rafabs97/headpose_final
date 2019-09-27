@@ -38,7 +38,7 @@ def mpatacchiola_generic(in_size, num_conv_blocks, num_filters_start, num_dense_
 
     # Add the remaining convolutional blocks. The number of filters in each layer is twice the number of filters in the previous layer.
     for i in range(num_conv_blocks - 1):
-        model.add(Conv2D(num_filters_start * (2 ** (i + 1)), kernel_size=(3, 3), padding='same', activation='relu'))
+        model.add(Conv2D(num_filters_start * (i + 2), kernel_size=(3, 3), padding='same', activation='relu'))
         model.add(MaxPooling2D(pool_size=(2, 2)))
 
     # Flatten (convert to a vector of values) the output of the last convolutional block.
