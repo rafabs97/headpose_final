@@ -35,20 +35,20 @@ confidence_threshold = 0.65
 
 in_size_estimator = 64
 num_conv_blocks = 6
-num_filters_start = 64
+num_filters_start = 128
 num_dense_layers = 1
-dense_layer_size = 512
+dense_layer_size = 256
 
 # Normalization parameters.
 
-mean = 0.407335
-std = 0.236271
+mean = 0.408808
+std = 0.237583
 
-t_mean = -0.022308
-t_std = 0.324841
+t_mean = -0.041212
+t_std = 0.323931
 
-p_mean = 0.000171
-p_std = 0.518044
+p_mean = -0.000276
+p_std = 0.540958
 
 # Models.
 
