@@ -50,14 +50,14 @@ patience = 10
 
 # Datagen parameters.
 
-mean = 0.407335
-std = 0.236271
+mean = 0.408808
+std = 0.237583
 
-t_mean = -0.022308
-t_std = 0.324841
+t_mean = -0.041212
+t_std = 0.323931
 
-p_mean = 0.000171
-p_std = 0.518044
+p_mean = -0.000276
+p_std = 0.540958
 
 # Paths.
 
@@ -149,9 +149,13 @@ model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mae'])
 history = model.fit_generator(generator=train_generator, steps_per_epoch=STEP_SIZE_TRAIN, validation_data=validation_generator,
                               validation_steps=STEP_SIZE_VALID, epochs=epochs, callbacks=[reduce_lr, stop, csv_logger], verbose=verbose)
 
-# Get score for the dataset (tilt, pan and global error).
+# Get score for the dataset (tilt, pan and global error), and mean estimation time.
 
+start_time = time.time()
 pred = model.predict((test_array / 255.0 - mean) / std)
+end_time = time.time()
+
+mean_time = (end_time - start_time) / len(test_array)
 
 mean_tilt_error = np.mean(np.abs(test_df['tilt'] - ((pred[:,0] * t_std + t_mean) * 90.0)))
 mean_pan_error = np.mean(np.abs(test_df['pan'] - ((pred[:,1] * p_std + p_mean) * 90.0)))
@@ -168,16 +172,16 @@ t_epochs = len(history.history['loss'])
 
 if os.path.exists(model_csv):
     with open(model_csv, "a") as file:
-        file.write(model_name + '.h5,%d,%d,%d,%d,%d,%.2f,%.1f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d\n' %
+        file.write(model_name + '.h5,%d,%d,%d,%d,%d,%.2f,%.1f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%f\n' %
                    (in_size, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size, dropout_rate,
                     shift_range, brightness_range[0], brightness_range[1], zoom_range[0], zoom_range[1],
-                    mean_tilt_error, mean_pan_error, score, t_epochs, model.count_params()))
+                    mean_tilt_error, mean_pan_error, score, t_epochs, model.count_params(), mean_time))
 else:
     with open(model_csv, "w") as file:
-        file.write('model,in_size,num_conv_blocks,num_filters_start,num_dense_layers,dense_layer_size,dropout_rate,\
-        shift_range,brightness_min,brightness_max,zoom_min,zoom_max,tilt_error,pan_error,score,stop_epochs,num_weights\n')
+        file.write('model,in_size,num_conv_blocks,num_filters_start,num_dense_layers,dense_layer_size,dropout_rate,'
+                   'shift_range,brightness_min,brightness_max,zoom_min,zoom_max,tilt_error,pan_error,score,stop_epochs,num_weights,mean_estimation_time\n')
 
-        file.write(model_name + '.h5,%d,%d,%d,%d,%d,%.2f,%.1f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d\n' %
+        file.write(model_name + '.h5,%d,%d,%d,%d,%d,%.2f,%.1f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%f\n' %
                    (in_size, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size, dropout_rate,
                     shift_range, brightness_range[0], brightness_range[1], zoom_range[0], zoom_range[1],
-                    mean_tilt_error, mean_pan_error, score, t_epochs, model.count_params()))
+                    mean_tilt_error, mean_pan_error, score, t_epochs, model.count_params(), mean_time))
