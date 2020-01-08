@@ -40,11 +40,11 @@ def mpatacchiola_generic(in_size, num_conv_blocks, num_filters_start, num_dense_
     for i in range(num_conv_blocks - 1):
 
         # Uncomment in order to add a layer with the same number of filters in the previous layer.
-        #model.add(Conv2D(num_filters_start, kernel_size=(3, 3), padding='same', activation='relu'))
+        model.add(Conv2D(num_filters_start, kernel_size=(3, 3), padding='same', activation='relu'))
 
         # Uncomment in order to add a layer with the number of filters in the previous layer + the number of filters in
         # the first conv. layer.
-        model.add(Conv2D(num_filters_start * (i + 2), kernel_size=(3, 3), padding='same', activation='relu'))
+        #model.add(Conv2D(num_filters_start * (i + 2), kernel_size=(3, 3), padding='same', activation='relu'))
 
         # Uncomment in order to add a layer with twice the number of filters in the previous layer.
         # model.add(Conv2D(num_filters_start * (2 ** (i + 1)), kernel_size=(3, 3), padding='same', activation='relu'))
