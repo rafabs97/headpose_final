@@ -185,3 +185,32 @@ def array_from_csv(source_csv, img_dir):
 
     # Return image, tilt and pan arrays.
     return img_array, tilt, pan
+
+def array_from_npy(img_npy, source_csv):
+    '''
+    Loads every picture from a dataset (previously processed and listed in a .csv file), as well as their labels (tilt
+    and pan values) into 3 Numpy arrays. Pictures must be stored  as a .npy file.
+
+    Arguments:
+        img_npy: File containing pictures to be loaded.
+        source_csv: .csv file containing the list of pictures from the dataset which we want to load.
+    Returns:
+        img_array: Numpy array containing the pictures from the dataset (in order of appearance in the .csv file).
+        tilt: Numpy array containing tilt values for every picture in the dataset (in order of appearance in the .csv
+        file).
+        pan: Numpy array containing pan values for every picture in the dataset (in order of appearance in the .csv
+        file).
+    '''
+
+    # Load .csv file as a Pandas dataframe.
+    df = pd.read_csv(source_csv)
+
+    # Load images.
+    img_array = np.load(img_npy)
+
+    # Tilt and pan arrays can be directly obtained from the dataframe.
+    tilt = np.array(df['tilt'])
+    pan = np.array(df['pan'])
+
+    # Return image, tilt and pan arrays.
+    return img_array, tilt, pan
