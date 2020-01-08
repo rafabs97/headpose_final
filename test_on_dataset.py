@@ -6,16 +6,19 @@ This script can be used to test the performance of a trained pose estimator mode
 """
 
 import numpy as np
+import time
 
-from clean_utils import array_from_csv
+from clean_utils import array_from_npy
 from architectures import mpatacchiola_generic
 
 # Paths.
 
 dataset_dir = 'clean/aflw_pointing04/'
 csv_file = 'test.csv'
+npy_file = 'test_img.npy'
 
 dataset_csv = dataset_dir + csv_file
+dataset_npy = dataset_dir + npy_file
 
 models_path = 'models/'
 
@@ -37,18 +40,22 @@ dense_layer_size = 512
 
 # Normalization parameters.
 
-mean = 0.407335
-std = 0.236271
+mean = 0.408808
+std = 0.237583
 
-t_mean = -0.022308
-t_std = 0.324841
+t_mean = -0.041212
+t_std = 0.323931
 
-p_mean = 0.000171
-p_std = 0.518044
+p_mean = -0.000276
+p_std = 0.540958
 
 # Load image, tilt and pan arrays for the dataset.
 
+"""
 img, tilt, pan = array_from_csv(dataset_csv, dataset_dir)
+"""
+
+img, tilt, pan = array_from_npy(dataset_npy, dataset_csv)
 
 # Estimator model.
 
@@ -57,7 +64,11 @@ pose_estimator.load_weights(estimator_path)
 
 # Get score for the dataset (tilt, pan and global error).
 
+start_time = time.time()
 pred = pose_estimator.predict((img / 255.0 - mean) / std)
+end_time = time.time()
+
+mean_time = (end_time - start_time) / len(img)
 
 mean_tilt_error = np.mean(np.abs(tilt - ((pred[:, 0] * t_std + t_mean) * 90.0)))
 mean_pan_error = np.mean(np.abs(pan - ((pred[:, 1] * p_std + p_mean) * 90.0)))
@@ -66,4 +77,4 @@ score = (mean_pan_error + mean_tilt_error) / 2
 
 # Print score.
 
-print("Tilt: %.2fº Pan: %.2fº Global: %.2fº" % (mean_tilt_error, mean_pan_error, score))
+print("Tilt: %.2fº Pan: %.2fº Global: %.2fº Mean time: %fs" % (mean_tilt_error, mean_pan_error, score, mean_time))
