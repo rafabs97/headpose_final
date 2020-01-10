@@ -4,8 +4,8 @@
 This file implements the data generator used during the training of the head pose estimator models in this project.
 """
 
-from keras.utils import Sequence
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.utils import Sequence
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from math import ceil
 import numpy as np
 
