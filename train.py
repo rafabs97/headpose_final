@@ -22,7 +22,7 @@ rn.seed(seed)
 session_conf = tf.ConfigProto(intra_op_parallelism_threads=1, inter_op_parallelism_threads=1)
 session_conf.gpu_options.allow_growth = True
 
-from keras import backend as K
+from tensorflow.keras import backend as K
 
 tf.set_random_seed(seed)
 
@@ -33,7 +33,7 @@ K.set_session(sess)
 
 import time
 import pandas as pd
-from keras.callbacks import EarlyStopping, CSVLogger, ReduceLROnPlateau
+from tensorflow.keras.callbacks import EarlyStopping, CSVLogger, ReduceLROnPlateau
 
 from architectures import mpatacchiola_generic
 from data_generator_array import HeadPoseDataGenerator
@@ -76,7 +76,7 @@ reduce_lr = ReduceLROnPlateau()
 # Architecture parameters.
 
 in_size = 64
-num_conv_blocks = 6
+num_conv_blocks = 5
 num_filters_start = 64
 num_dense_layers = 1
 dense_layer_size = 512
@@ -126,6 +126,22 @@ loss_csv = model_dir + model_name + '_loss.csv'
 
 csv_logger = CSVLogger(loss_csv)
 
+# Get number of FLOPs.
+
+run_meta = tf.RunMetadata()
+
+with tf.Session(graph=tf.Graph()) as sess_2:
+    K.set_session(sess_2)
+
+    model = mpatacchiola_generic(in_size, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size, dropout_rate, batch_size=1)
+
+    opts = tf.profiler.ProfileOptionBuilder.float_operation()
+    flops = tf.profiler.profile(sess_2.graph, run_meta=run_meta, cmd='op', options=opts).total_float_ops
+
+# Restore session
+
+K.set_session(sess)
+
 # Configure estimator model from architecture parameters set before.
 
 model = mpatacchiola_generic(in_size, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size, dropout_rate)
@@ -136,13 +152,9 @@ model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mae'])
 history = model.fit_generator(generator=train_generator, steps_per_epoch=STEP_SIZE_TRAIN, validation_data=validation_generator,
                               validation_steps=STEP_SIZE_VALID, epochs=epochs, callbacks=[reduce_lr, stop, csv_logger], verbose=verbose)
 
-# Get score for the dataset (tilt, pan and global error), and mean estimation time.
+# Get score for the dataset (tilt, pan and global error).
 
-start_time = time.time()
 pred = model.predict((test_array / 255.0 - mean) / std)
-end_time = time.time()
-
-mean_time = (end_time - start_time) / len(test_array)
 
 mean_tilt_error = np.mean(np.abs(test_df['tilt'] - ((pred[:,0] * t_std + t_mean) * 90.0)))
 mean_pan_error = np.mean(np.abs(test_df['pan'] - ((pred[:,1] * p_std + p_mean) * 90.0)))
@@ -159,16 +171,16 @@ t_epochs = len(history.history['loss'])
 
 if os.path.exists(model_csv):
     with open(model_csv, "a") as file:
-        file.write(model_name + '.h5,%d,%d,%d,%d,%d,%.2f,%.1f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%f\n' %
+        file.write(model_name + '.h5,%d,%d,%d,%d,%d,%.2f,%.1f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%d\n' %
                    (in_size, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size, dropout_rate,
                     shift_range, brightness_range[0], brightness_range[1], zoom_range[0], zoom_range[1],
-                    mean_tilt_error, mean_pan_error, score, t_epochs, model.count_params(), mean_time))
+                    mean_tilt_error, mean_pan_error, score, t_epochs, model.count_params(), flops))
 else:
     with open(model_csv, "w") as file:
         file.write('model,in_size,num_conv_blocks,num_filters_start,num_dense_layers,dense_layer_size,dropout_rate,'
-                   'shift_range,brightness_min,brightness_max,zoom_min,zoom_max,tilt_error,pan_error,score,stop_epochs,num_weights,mean_estimation_time\n')
+                   'shift_range,brightness_min,brightness_max,zoom_min,zoom_max,tilt_error,pan_error,score,stop_epochs,num_weights,flops\n')
 
-        file.write(model_name + '.h5,%d,%d,%d,%d,%d,%.2f,%.1f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%f\n' %
+        file.write(model_name + '.h5,%d,%d,%d,%d,%d,%.2f,%.1f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%d\n' %
                    (in_size, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size, dropout_rate,
                     shift_range, brightness_range[0], brightness_range[1], zoom_range[0], zoom_range[1],
-                    mean_tilt_error, mean_pan_error, score, t_epochs, model.count_params(), mean_time))
+                    mean_tilt_error, mean_pan_error, score, t_epochs, model.count_params(), flops))
