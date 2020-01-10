@@ -9,10 +9,10 @@ convolutional neural networks and adaptive gradient methods. Pattern Recognition
 June 2017.
 """
 
-from keras.models import Sequential
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import InputLayer, Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
-def mpatacchiola_generic(in_size, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size, dropout_rate=0):
+def mpatacchiola_generic(in_size, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size, dropout_rate=0, batch_size=None):
     '''
     Builds a Keras model based on the architectures used in the publication of Patacchiola et al. (see reference at the beginning
     of the file).
@@ -25,6 +25,7 @@ def mpatacchiola_generic(in_size, num_conv_blocks, num_filters_start, num_dense_
         dense_layer_size: Number of neurons per hidden dense layer.
         dropout_rate: Probability of ignoring a certain neuron at the output of each hidden dense layer at each training
         step.
+        batch_size: Allows to set a fixed batch size, if needed.
     Returns:
         model: The configured Keras model.
     '''
@@ -33,7 +34,7 @@ def mpatacchiola_generic(in_size, num_conv_blocks, num_filters_start, num_dense_
     model = Sequential()
 
     # At least, the model must have 1 convolutional block.
-    model.add(Conv2D(num_filters_start, kernel_size=(3, 3), padding='same', activation='relu', input_shape=(in_size, in_size, 1)))
+    model.add(Conv2D(num_filters_start, kernel_size=(3, 3), padding='same', activation='relu', input_shape=(in_size, in_size, 1), batch_size=batch_size))
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
     # Add the remaining convolutional blocks.
