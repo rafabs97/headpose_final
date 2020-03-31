@@ -44,7 +44,7 @@ def pose_from_filename(img):
     # Return tilt and pan values.
     return tilt, pan
 
-def clean_pointing04(pointing04_dir, destination_dir, detector, confidence_threshold, out_size, start_count = 0, duplicate_until = 0):
+def clean_pointing04(pointing04_dir, destination_dir, detector, confidence_threshold, out_size, grayscale = False, interpolation = cv2.INTER_LINEAR, start_count = 0, duplicate_until = 0):
     '''
     Performs the basic processing of the Pointing'04 dataset, obtaining cropped pictures for each head detection in the
     original images, and getting the ground truth pose values for each detection from the .mat file.
@@ -85,6 +85,12 @@ def clean_pointing04(pointing04_dir, destination_dir, detector, confidence_thres
     # Create empty arrays for storing pictures in each class.
     pics_by_class = [[] for i in range(169)]
 
+    # Set number of channels for cropped pictures.
+    if grayscale == True:
+        out_shape = (out_size, out_size)
+    else:
+        out_shape = (out_size, out_size, 3)
+
     # For each person in the dataset:
     for i in range(1, 16):
 
@@ -119,14 +125,17 @@ def clean_pointing04(pointing04_dir, destination_dir, detector, confidence_thres
                 t_count = t_count + len(bboxes)
 
             # Get cropped pictures from the loaded picture.
-            pic = cv2.cvtColor(pic, cv2.COLOR_BGR2GRAY)
-            c_pics = get_cropped_pics(pic, bboxes, out_size, 0, cropping='small')
+
+            if grayscale == True:
+                pic = cv2.cvtColor(pic, cv2.COLOR_BGR2GRAY)
+
+            c_pics = get_cropped_pics(pic, bboxes, out_size, 0, cropping='small', interpolation=interpolation)
 
             # For each cropped picture:
             for c_pic in c_pics:
 
                 # If the size of the cropped pic is the expected:
-                if c_pic.shape == (out_size, out_size):
+                if c_pic.shape == out_shape:
 
                     # Store picture.
                     cv2.imwrite(destination_dir + "pic_" + str(count) + ".jpg", c_pic)
@@ -138,10 +147,10 @@ def clean_pointing04(pointing04_dir, destination_dir, detector, confidence_thres
 
                     # Mirror picture
                     pan = -1 * pan
-                    pic_copy = cv2.flip(c_pic, 1)
+                    c_pic = cv2.flip(c_pic, 1)
 
                     # Store mirrored picture.
-                    cv2.imwrite(destination_dir + "pic_" + str(count + 1) + ".jpg", pic_copy)
+                    cv2.imwrite(destination_dir + "pic_" + str(count + 1) + ".jpg", c_pic)
                     file.write("pic_" + str(count + 1) + ".jpg," + str(tilt) + "," + str(pan) + "\n")
 
                     # Calculate class for mirrored picture.
@@ -226,6 +235,11 @@ def main():
     out_size = 64
     confidence_threshold = 0.75
 
+    # Output parameters.
+
+    grayscale_output = True
+    downscaling_interpolation = cv2.INTER_LINEAR
+
     # Number of splits for class assignation.
 
     num_splits_tilt = 8
@@ -253,7 +267,7 @@ def main():
 
     # Actual cleaning.
 
-    clean_pointing04(pointing04_dir, destination_dir, detector, confidence_threshold, out_size)
+    clean_pointing04(pointing04_dir, destination_dir, detector, confidence_threshold, out_size, grayscale_output, downscaling_interpolation)
 
     # Assign classes.
 

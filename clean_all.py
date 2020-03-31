@@ -11,6 +11,7 @@ section 8.3, in order to know the meaning of these values).
 
 import os
 import shutil
+import cv2
 
 from keras_ssd512 import ssd_512
 
@@ -18,43 +19,48 @@ from clean_aflw import clean_aflw
 from clean_pointing04 import clean_pointing04
 from dataset_utils import class_assign, split_dataset, find_norm_parameters, store_dataset_arrays
 
-# Source paths
+# Source paths.
 
 aflw_dir = 'original/aflw/'
 aflw_mat = 'original/aflw/dataset_landmarks_and_pose_withfaceids.mat'
 pointing04_dir = 'original/HeadPoseImageDatabase/'
 
-# Destination paths
+# Destination paths.
 
 destination_dir = 'clean/aflw_pointing04/'
-detector_log_path = 'models/detector_log.csv'
+detector_log_path = 'models/detector_log_corrected.csv'
 
-# Model paths
+# Model paths.
 
 head_detector_path = 'models/head-detector.h5'
 
-# Detection parameters
+# Detection parameters.
 
 confidence_threshold = 0.65
 in_size = 512
 out_size = 64
 
-# Number of splits for class assignation
+# Output parameters.
+
+grayscale_output = True
+downscaling_interpolation = cv2.INTER_LINEAR
+
+# Number of splits for class assignation.
 
 num_splits_tilt = 8
 num_splits_pan = 8
 
-# Ratios for train/test and train/validation split
+# Ratios for train/test and train/validation split.
 
 test_ratio = 0.2
 validation_ratio = 0.2
 
-# Detector model
+# Detector model.
 
 detector = ssd_512(image_size=(in_size, in_size, 3), n_classes=1, min_scale=0.1, max_scale=1, mode='inference')
 detector.load_weights(head_detector_path)
 
-# Check if output directory exists
+# Check if output directory exists.
 
 try:
     os.mkdir(destination_dir)
@@ -65,14 +71,16 @@ except FileExistsError:
     shutil.rmtree(destination_dir)
     os.mkdir(destination_dir)
 
-# Actual cleaning
+# Actual cleaning.
 
-count_aflw, t_ratio_aflw, f_ratio_aflw = clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_threshold, out_size)
-count_p04, t_ratio_p04, f_ratio_p04 = clean_pointing04(pointing04_dir, destination_dir, detector, confidence_threshold, out_size,
-                                                       count_aflw, duplicate_until=-1)
+count_aflw, t_ratio_aflw, f_ratio_aflw = clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_threshold,
+                                                    out_size, grayscale_output, downscaling_interpolation)
+count_p04, t_ratio_p04, f_ratio_p04 = clean_pointing04(pointing04_dir, destination_dir, detector, confidence_threshold,
+                                                       out_size, grayscale_output, downscaling_interpolation, count_aflw,
+                                                       duplicate_until=-1)
 
-'''
-# Log found ratios
+"""
+# Log found ratios.
 
 if os.path.isfile(detector_log_path):
     file = open(detector_log_path, 'a')
@@ -83,20 +91,20 @@ else:
     file.write("%.2f,%d,%f,%f,%d,%f,%f\n" % (confidence_threshold, count_aflw, t_ratio_aflw, f_ratio_aflw, count_p04 - count_aflw, t_ratio_p04, f_ratio_p04))
 
 file.close()
-'''
+"""
 
-# Assign classes
+# Assign classes.
 
 class_assign(destination_dir, num_splits_tilt, num_splits_pan)
 
-# Split dataset
+# Split dataset.
 
 split_dataset(destination_dir, test_ratio, validation_ratio)
 
-# Get normalization parameters
+# Get normalization parameters.
 
 find_norm_parameters(destination_dir)
 
-# OPTIONAL: Save dataset as numpy arrays (for uploading to Google Colab)
+# OPTIONAL: Save dataset as numpy arrays (for uploading to Google Colab).
 
 store_dataset_arrays(destination_dir)

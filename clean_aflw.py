@@ -19,7 +19,7 @@ from head_detector_utils import get_head_bboxes, get_cropped_pics
 from clean_utils import bbox_match
 from dataset_utils import class_assign, split_dataset, find_norm_parameters, store_dataset_arrays
 
-def clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_threshold, out_size, start_count = 0):
+def clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_threshold, out_size, grayscale = False, interpolation = cv2.INTER_LINEAR, start_count = 0):
     '''
     Performs the basic processing of the AFLW dataset, obtaining cropped pictures for each head detection in the
     original images, and getting the ground truth pose values for each detection from the .mat file.
@@ -63,6 +63,12 @@ def clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_thresho
     f_count = 0
     d_count = 0
 
+    # Set number of channels for cropped pictures.
+    if grayscale == True:
+        out_shape = (out_size, out_size)
+    else:
+        out_shape = (out_size, out_size, 3)
+
     # For every detection in the dataset:
     for tuple_index in iterator:
 
@@ -79,8 +85,11 @@ def clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_thresho
         d_count = d_count + len(detected_bboxes)
 
         # Get cropped pictures from the loaded picture.
-        pic = cv2.cvtColor(pic, cv2.COLOR_BGR2GRAY)
-        c_pics = get_cropped_pics(pic, detected_bboxes, out_size, 0, cropping='small')
+
+        if grayscale == True:
+            pic = cv2.cvtColor(pic, cv2.COLOR_BGR2GRAY)
+
+        c_pics = get_cropped_pics(pic, detected_bboxes, out_size, 0, cropping='small', interpolation=interpolation)
 
         # Create arrays containing ground truth detections and poses, and initialize them with the values corresponding
         # to the current tuple.
@@ -122,7 +131,7 @@ def clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_thresho
                 If there is a valid matching between a detected bounding box and a ground truth bounding box and the
                 size of the cropped pic corresponding to the detected bounding box is the expected:
                 '''
-                if indexes[box_index] != -1 and c_pics[box_index].shape == (out_size, out_size):
+                if indexes[box_index] != -1 and c_pics[box_index].shape == out_shape:
 
                     # Pose values for the detection are the values corresponding to its matching ground truth annotated head.
                     tilt = degrees(poses[indexes[box_index]][1])
@@ -179,6 +188,11 @@ def main():
     out_size = 64
     confidence_threshold = 0.75
 
+    # Output paramenters
+
+    grayscale_output = True
+    downscaling_interpolation = cv2.INTER_LINEAR
+
     # Number of splits for class assignation.
 
     num_splits_tilt = 8
@@ -206,7 +220,7 @@ def main():
 
     # Actual cleaning.
 
-    clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_threshold, out_size)
+    clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_threshold, out_size, grayscale_output, downscaling_interpolation)
 
     # Assign classes.
 
