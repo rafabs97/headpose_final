@@ -34,7 +34,7 @@ confidence_threshold = 0.2
 
 in_size_estimator = 64
 num_conv_blocks = 6
-num_filters_start = 64
+num_filters_start = 32
 num_dense_layers = 1
 dense_layer_size = 512
 
@@ -57,7 +57,7 @@ head_detector.load_weights(detector_path)
 pose_estimator = mpatacchiola_generic(in_size_estimator, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size)
 pose_estimator.load_weights(estimator_path)
 
-# Read image
+# Read image.
 
 img = cv2.imread(demo_img)
 
