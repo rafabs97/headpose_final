@@ -34,7 +34,7 @@ confidence_threshold = 0.65
 
 in_size_estimator = 64
 num_conv_blocks = 6
-num_filters_start = 64
+num_filters_start = 32
 num_dense_layers = 1
 dense_layer_size = 512
 
@@ -51,11 +51,12 @@ p_std = 0.540958
 
 # Load image, tilt and pan arrays for the dataset.
 
-"""
-img, tilt, pan = array_from_csv(dataset_csv, dataset_dir)
-"""
-
 img, tilt, pan = array_from_npy(dataset_npy, dataset_csv)
+
+# Add extra dimension if needed (channels).
+
+if len(img.shape) == 3:
+    img = np.expand_dims(img, -1)
 
 # Estimator model.
 
