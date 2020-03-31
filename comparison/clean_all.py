@@ -17,9 +17,9 @@ from dataset_utils import class_assign, split_dataset, find_norm_parameters, sto
 
 # Source paths.
 
-aflw_dir = '../headpose_final/original/aflw/'
-aflw_mat = '../headpose_final/original/aflw/dataset_landmarks_and_pose_withfaceids.mat'
-pointing04_dir = '../headpose_final/original/HeadPoseImageDatabase/'
+aflw_dir = '../original/aflw/'
+aflw_mat = '../original/aflw/dataset_landmarks_and_pose_withfaceids.mat'
+pointing04_dir = '../original/HeadPoseImageDatabase/'
 
 # Destination paths.
 

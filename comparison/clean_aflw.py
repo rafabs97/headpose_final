@@ -169,8 +169,8 @@ def main():
 
     # Source paths.
 
-    aflw_dir = '../headpose_final/original/aflw/'
-    aflw_mat = '../headpose_final/original/aflw/dataset_landmarks_and_pose_withfaceids.mat'
+    aflw_dir = '../original/aflw/'
+    aflw_mat = '../original/aflw/dataset_landmarks_and_pose_withfaceids.mat'
 
     # Destination path.
 

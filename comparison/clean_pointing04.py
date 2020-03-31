@@ -217,7 +217,7 @@ def main():
 
     # Source paths.
 
-    pointing04_dir = '../headpose_final/original/HeadPoseImageDatabase/'
+    pointing04_dir = '../original/HeadPoseImageDatabase/'
 
     # Destination path.
 
