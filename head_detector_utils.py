@@ -57,7 +57,7 @@ def get_head_bboxes(img_ori, model, confidence_threshold):
     # Return valid bounding boxes.
     return bboxes
 
-def get_cropped_pics(img_ori, bboxes, crop_size, offset_perc, cropping = ''):
+def get_cropped_pics(img_ori, bboxes, crop_size, offset_perc, cropping = '', interpolation = cv2.INTER_LINEAR):
     '''
 
     Arguments:
@@ -150,14 +150,14 @@ def get_cropped_pics(img_ori, bboxes, crop_size, offset_perc, cropping = ''):
 
             # If the box was to be reshaped, resize it.
             if cropping == 'small' or cropping == 'large':
-                c_pic = cv2.resize(c_pic, (int(crop_size * (1 + 2 * offset_perc)), int(crop_size * (1 + 2 * offset_perc))))
+                c_pic = cv2.resize(c_pic, (int(crop_size * (1 + 2 * offset_perc)), int(crop_size * (1 + 2 * offset_perc))), interpolation=interpolation)
             else:
                 if c_pic.shape[0] > c_pic.shape[1]:
                     c_pic = cv2.resize(c_pic, (int((crop_size * c_pic.shape[0] / c_pic.shape[1]) * (1 + 2 * offset_perc)),
-                                               int(crop_size * (1 + 2 * offset_perc))))
+                                               int(crop_size * (1 + 2 * offset_perc))), interpolation=interpolation)
                 else:
                     c_pic = cv2.resize(c_pic, (int(crop_size * (1 + 2 * offset_perc)),
-                                               int((crop_size * c_pic.shape[1] / c_pic.shape[0]) * (1 + 2 * offset_perc))))
+                                               int((crop_size * c_pic.shape[1] / c_pic.shape[0]) * (1 + 2 * offset_perc))), interpolation=interpolation)
 
             # Append output picture.
             pics.append(c_pic)
