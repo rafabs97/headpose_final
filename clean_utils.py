@@ -172,12 +172,11 @@ def array_from_csv(source_csv, img_dir):
         path = img_dir + img
 
         # Load image and append it to the list.
-        pic = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        pic = cv2.imread(path, cv2.IMREAD_UNCHANGED)
         img_array.append(pic)
 
     # Convert list of images into an array suitable for its use in model training.
     img_array = np.array(img_array)
-    img_array = img_array.reshape((img_array.shape[0], img_array.shape[1], img_array.shape[2], 1))
 
     # Tilt and pan arrays can be directly obtained from the dataframe.
     tilt = np.array(df['tilt'])
