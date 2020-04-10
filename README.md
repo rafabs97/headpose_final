@@ -32,6 +32,23 @@ M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutio
 * Run the script  ``convert_ssd_512.py``.
 * Run the script ``demo_image.py``. The output should match the demo output at the top of this page.
 
+## Comparison
+
+We´ve added the code we used to compare our model with the one by Patacchiola et al. that can be found [here](https://github.com/mpatacchiola/deepgaze). In order to use it:
+
+* Place ```deepgaze/face_detection.py``` and ```deepgaze/head_pose_estimation.py```from the previous repository on the ``comparison/`` directory on the root of the cloned repository directory.
+* Place ```etc/tensorflow/head_pose/tilt/``` and ```etc/tensorflow/head_pose/pan/``` from the same repository on the ``comparison/models/`` directory of the cloned repository directory (create the directory if needed).
+* Place ```etc/xml/haarcascade_frontalface_alt.xml``` and ```etc/xml/haarcascade_profileface.xml``` from the same repository on the ``comparison/models`` directory of the cloned repository directory.
+
+The functions of the scripts contained are the following: 
+
+* Processed dataset for the comparison have been obtained using the script ``clean_aflw.py`` on the ``comparison/`` directory (scripts ``clean_pointing04.py`` and ``clean_all.py`` can be used to process the Pointing'04 dataset and to obtain the combined dataset in the same way we processed the data for our training, but using as head detector the Viola-Jones detector).
+* Script ´´´
+* Processed dataset for the comparison have been obtained using the script ``clean_aflw.py`` on the ``comparison/`` directory (scripts ``clean_pointing04.py`` and ``clean_all.py`` can be used to process the Pointing'04 dataset and to obtain the combined dataset in the same way we processed the data for our training, but using as head detector the Viola-Jones detector).
+* Script ``match_datasets.py`` can be used to naïvely extract a subset from a dataset appearing on a second dataset, based only on the tilt and pan head pose values (we have used it to match pictures from the AFLW dataset, as it should be rare to find repeating values in that dataset). 
+* We used script ``test_on_dataset.py`` to get the mean error of the models by
+Patacchiola et al. over the dataset obtained using the previous scripts.
+
 ## Software requirements
 * OS: Ubuntu 16.04 or later (and derivatives), Windows 7 or later, macOS 10.12.6 or later (no GPU support).
 * Python: Version 3.6.
