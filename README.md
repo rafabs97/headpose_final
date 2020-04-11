@@ -37,7 +37,8 @@ M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutio
 We´ve added the code we used to compare our model with the one by Patacchiola et al. that can be found [here](https://github.com/mpatacchiola/deepgaze). In order to use it:
 
 * Place ```deepgaze/face_detection.py``` and ```deepgaze/head_pose_estimation.py```from the previous repository on the ``comparison/`` directory on the root of the cloned repository directory.
-  * You may need to replace any reference to cv2.cv.CV_HAAR_SCALE_IMAGE to cv2.CASCADE_SCALE_IMAGE.
+  * You may need to replace any reference to cv2.cv.CV_HAAR_SCALE_IMAGE to cv2.CASCADE_SCALE_IMAGE in ```face_detection.py```.
+  * You can remove the dlib verification and the entire PnpHeadPoseEstimator from ```head_pose_estimation.py```, as it won't be used in     the comparison.
 * Place ```etc/tensorflow/head_pose/tilt/``` and ```etc/tensorflow/head_pose/pan/``` from the same repository on the ``comparison/models/`` directory of the cloned repository directory (create the directory if needed).
 * Place ```etc/xml/haarcascade_frontalface_alt.xml``` and ```etc/xml/haarcascade_profileface.xml``` from the same repository on the ``comparison/models`` directory of the cloned repository directory.
 
