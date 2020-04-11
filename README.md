@@ -1,6 +1,6 @@
 Human head pose estimation using Keras over TensorFlow
 ======================================================
-![detections](https://github.com/rafabs97/headpose_final/blob/master/sample_detections.png)
+![detections](https://github.com/rafabs97/headpose_final/blob/master/sample_detecions.png)
 
 Work by Rafael Berral-Soler, directed by Manuel J. Marin-Jimenez and Francisco J. Madrid-Cuevas. 
 The pose estimator models developed on this project are based on the architectures on the following article:
