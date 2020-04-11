@@ -21,7 +21,7 @@ num_machines = 1
 # Architecture parameters.
 
 num_conv_blocks = 6
-num_filters_start = 64
+num_filters_start = 32
 num_dense_layers = 1
 dense_layer_size = 512
 dropout_rate = 0
