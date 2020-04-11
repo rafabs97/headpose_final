@@ -1,6 +1,6 @@
 Human head pose estimation using Keras over TensorFlow
 ======================================================
-![detections](https://github.com/rafabs97/headpose_final/blob/master/sample_detections.png)
+![detections](https://github.com/rafabs97/headpose_final/blob/master/sample_detecions.png)
 
 Work by Rafael Berral-Soler, directed by Manuel J. Marin-Jimenez and Francisco J. Madrid-Cuevas. 
 The pose estimator models developed on this project are based on the architectures on the following article:
@@ -37,13 +37,13 @@ M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutio
 We´ve added the code we used to compare our model with the one by Patacchiola et al. that can be found [here](https://github.com/mpatacchiola/deepgaze). In order to use it:
 
 * Place ```deepgaze/face_detection.py``` and ```deepgaze/head_pose_estimation.py```from the previous repository on the ``comparison/`` directory on the root of the cloned repository directory.
+  * You may need to replace any reference to cv2.cv.CV_HAAR_SCALE_IMAGE to cv2.CASCADE_SCALE_IMAGE in ```face_detection.py```.
+  * You can remove the dlib verification and the entire PnpHeadPoseEstimator from ```head_pose_estimation.py```, as it won't be used in     the comparison.
 * Place ```etc/tensorflow/head_pose/tilt/``` and ```etc/tensorflow/head_pose/pan/``` from the same repository on the ``comparison/models/`` directory of the cloned repository directory (create the directory if needed).
 * Place ```etc/xml/haarcascade_frontalface_alt.xml``` and ```etc/xml/haarcascade_profileface.xml``` from the same repository on the ``comparison/models`` directory of the cloned repository directory.
 
 The functions of the scripts contained are the following: 
 
-* Processed dataset for the comparison have been obtained using the script ``clean_aflw.py`` on the ``comparison/`` directory (scripts ``clean_pointing04.py`` and ``clean_all.py`` can be used to process the Pointing'04 dataset and to obtain the combined dataset in the same way we processed the data for our training, but using as head detector the Viola-Jones detector).
-* Script ´´´
 * Processed dataset for the comparison have been obtained using the script ``clean_aflw.py`` on the ``comparison/`` directory (scripts ``clean_pointing04.py`` and ``clean_all.py`` can be used to process the Pointing'04 dataset and to obtain the combined dataset in the same way we processed the data for our training, but using as head detector the Viola-Jones detector).
 * Script ``match_datasets.py`` can be used to naïvely extract a subset from a dataset appearing on a second dataset, based only on the tilt and pan head pose values (we have used it to match pictures from the AFLW dataset, as it should be rare to find repeating values in that dataset). 
 * We used script ``test_on_dataset.py`` to get the mean error of the models by
