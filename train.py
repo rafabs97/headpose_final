@@ -56,7 +56,7 @@ t_std = 0.323931
 p_mean = -0.000276
 p_std = 0.540958
 
-shift_range = 0.1
+shift_range = 0.0
 brightness_range = [0.5, 1.5]
 zoom_range = [1.0, 1.0]
 
@@ -76,8 +76,8 @@ reduce_lr = ReduceLROnPlateau()
 # Architecture parameters.
 
 in_size = 64
-num_conv_blocks = 5
-num_filters_start = 64
+num_conv_blocks = 6
+num_filters_start = 32
 num_dense_layers = 1
 dense_layer_size = 512
 dropout_rate = 0
@@ -146,6 +146,8 @@ K.set_session(sess)
 
 model = mpatacchiola_generic(in_size, num_conv_blocks, num_filters_start, num_dense_layers, dense_layer_size, dropout_rate)
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mae'])
+
+print(model.summary())
 
 # Train the configured model on the train generator.
 
