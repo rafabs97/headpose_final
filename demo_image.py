@@ -86,7 +86,7 @@ for i in range(len(heads)):
         # Draw detection in the original picture..
 
         rect = cv2.rectangle(img, (xmax, ymin), (xmin, ymax), (0, 255, 0), 2, lineType=cv2.LINE_AA)
-        cv2.putText(rect, 'Tilt: ' + str(round(tilt, 2)) + ' Pan: ' + str(round(pan, 2)), (xmin, ymin - 10), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), 1)
+        cv2.putText(rect, 'TILT: ' + str(round(tilt, 2)) + ' PAN: ' + str(round(pan, 2)), (xmin, ymin - 10), cv2.FONT_HERSHEY_DUPLEX, 0.5, (0, 0, 255), 1)
 
         # Draw arrow from the center of the picture in the direction of the pose in the original picture.
 
