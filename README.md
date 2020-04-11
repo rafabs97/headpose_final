@@ -23,12 +23,12 @@ M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutio
   
 ## Software requirements
 * OS: Ubuntu 16.04 or later (and derivatives), Windows 7 or later, macOS 10.12.6 or later (no GPU support).
-* Python: Version 3.6.
+* Python: Version 3.7.6.
 * NVIDIA Software: GPU Drivers (410.x or later), CUDA (10.0) and cuDNN (7.4.1 or later for CUDA 10.0).
 * TensorFlow: with or without GPU support, versión 1.14.0.
 * Keras: Version 2.2.4.
 * OpenCV: Version 4.1.0.25.
-* Other Python libraries: glob2 (0.7), numpy (1.17.1), pandas (0.25.1), pillow (6.1.0), scikit-learn (0.21.3).
+* Other Python libraries: glob2 (0.7), numpy (1.18.1), pandas (1.0.1), pillow (7.0.0), scikit-learn (0.22.2).
 
 ## Quick Start guide
 * Clone this repository to a directory of your choice.
