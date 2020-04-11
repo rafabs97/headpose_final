@@ -6,7 +6,6 @@ This file contains the functions that allow to exploit the basic functionality o
 
 import cv2
 import numpy as np
-from face_detection import HaarFaceDetector
 
 def get_head_bboxes(img_ori, model):
 
