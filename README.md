@@ -43,8 +43,6 @@ We´ve added the code we used to compare our model with the one by Patacchiola e
 The functions of the scripts contained are the following: 
 
 * Processed dataset for the comparison have been obtained using the script ``clean_aflw.py`` on the ``comparison/`` directory (scripts ``clean_pointing04.py`` and ``clean_all.py`` can be used to process the Pointing'04 dataset and to obtain the combined dataset in the same way we processed the data for our training, but using as head detector the Viola-Jones detector).
-* Script ´´´
-* Processed dataset for the comparison have been obtained using the script ``clean_aflw.py`` on the ``comparison/`` directory (scripts ``clean_pointing04.py`` and ``clean_all.py`` can be used to process the Pointing'04 dataset and to obtain the combined dataset in the same way we processed the data for our training, but using as head detector the Viola-Jones detector).
 * Script ``match_datasets.py`` can be used to naïvely extract a subset from a dataset appearing on a second dataset, based only on the tilt and pan head pose values (we have used it to match pictures from the AFLW dataset, as it should be rare to find repeating values in that dataset). 
 * We used script ``test_on_dataset.py`` to get the mean error of the models by
 Patacchiola et al. over the dataset obtained using the previous scripts.
