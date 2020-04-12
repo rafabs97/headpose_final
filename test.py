@@ -91,6 +91,18 @@ flip = None
 while flip != 'Y' and flip != 'N':
     flip = input("Flip? (Y/N): ")
 
+# Set the value that controls if the output should be shown.
+
+show = None
+
+while show != 'Y' and show != 'N':
+    show = input("Show output? (Y/N): ")
+
+if show == 'Y':
+    print("Exit on \'Esc\' or \'Ctrl + C\'.")
+else:
+    print("Exit on \'Ctrl + C\'.")
+
 # Initialize output values and counters before processing the video stream.
 
 out = True
@@ -99,98 +111,107 @@ frame_count = 0
 fps_mean = 0
 
 # While there is a frame from the video stream:
-while out == True:
 
-    # Get processing start time for the current frame.
-    frame_start = datetime.now()
+try:
+    while out == True:
 
-    # Try to get a frame from the camera.
-    out, img = cam.read()
+        # Get processing start time for the current frame.
+        frame_start = datetime.now()
 
-    # If there is no frame, exit.
-    if out == False:
-        break
+        # Try to get a frame from the camera.
+        out, img = cam.read()
 
-    # Flip picture if needed.
-    if flip == 'Y':
-        img = cv2.flip(img, 1)
+        # If there is no frame, exit.
+        if out == False:
+            break
 
-    # Get bounding boxes for every detected head in the picture.
-    bboxes = get_head_bboxes(img, head_detector, confidence_threshold)
+        # Flip picture if needed.
+        if flip == 'Y':
+            img = cv2.flip(img, 1)
 
-    # Get cropped pics for every valid bounding box.
-    gray_pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    heads = get_cropped_pics(gray_pic, bboxes, in_size_estimator, 0, cropping='small')
+        # Get bounding boxes for every detected head in the picture.
+        bboxes = get_head_bboxes(img, head_detector, confidence_threshold)
 
-    # Initialize head counter.
-    head_count = 0
+        # Get cropped pics for every valid bounding box.
+        gray_pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        heads = get_cropped_pics(gray_pic, bboxes, in_size_estimator, 0, cropping='small')
 
-    # For each cropped picture:
-    for i in range(len(heads)):
+        # Initialize head counter.
+        head_count = 0
 
-        # If it is a valid picture:
-        if heads[i].shape == (in_size_estimator, in_size_estimator):
+        # For each cropped picture:
+        for i in range(len(heads)):
 
-            # Increase head counter.
-            head_count = head_count + 1
+            # If it is a valid picture:
+            if heads[i].shape == (in_size_estimator, in_size_estimator):
 
-            # Get pose values.
-            tilt, pan = get_pose(heads[i], pose_estimator, img_norm = [mean, std], tilt_norm = [t_mean, t_std],
-                                 pan_norm = [p_mean, p_std], rescale=90.0)
+                # Increase head counter.
+                head_count = head_count + 1
 
-            # Get minimum and maximum values for both axes of the bounding box.
-            xmin, ymin, xmax, ymax = bboxes[i]
+                # Get pose values.
+                tilt, pan = get_pose(heads[i], pose_estimator, img_norm = [mean, std], tilt_norm = [t_mean, t_std],
+                                     pan_norm = [p_mean, p_std], rescale=90.0)
 
-            # Draw detection in the original picture..
+                # Get minimum and maximum values for both axes of the bounding box.
+                xmin, ymin, xmax, ymax = bboxes[i]
 
-            rect = cv2.rectangle(img, (xmax, ymin), (xmin, ymax), (0, 255, 0), 2, lineType=cv2.LINE_AA)
-            cv2.putText(rect, 'TILT: ' + str(round(tilt, 2)) + ' PAN: ' + str(round(pan, 2)), (xmin, ymin - 10), cv2.FONT_HERSHEY_DUPLEX, 0.5, (0, 255, 0), 1)
+                # Draw detection in the original picture..
 
-            # Draw arrow from the center of the picture in the direction of the pose in the original picture.
+                rect = cv2.rectangle(img, (xmax, ymin), (xmin, ymax), (0, 255, 0), 2, lineType=cv2.LINE_AA)
+                cv2.putText(rect, 'TILT: ' + str(round(tilt, 2)) + ' PAN: ' + str(round(pan, 2)), (xmin, ymin - 10), cv2.FONT_HERSHEY_DUPLEX, 0.5, (0, 255, 0), 1)
 
-            centerx = int((xmin + xmax) / 2)
-            centery = int((ymin + ymax) / 2)
-            center = (centerx, centery)
+                # Draw arrow from the center of the picture in the direction of the pose in the original picture.
 
-            max_arrow_len = (xmax - xmin + 1) / 2
+                centerx = int((xmin + xmax) / 2)
+                centery = int((ymin + ymax) / 2)
+                center = (centerx, centery)
 
-            offset_x = -1 * int(sin(radians(pan)) * max_arrow_len)
-            offset_y = -1 * int(sin(radians(tilt)) * max_arrow_len)
+                max_arrow_len = (xmax - xmin + 1) / 2
 
-            end = (centerx + offset_x, centery + offset_y)
-            cv2.arrowedLine(img, center, end, (0, 0, 255), 2, line_type=cv2.LINE_AA)
+                offset_x = -1 * int(sin(radians(pan)) * max_arrow_len)
+                offset_y = -1 * int(sin(radians(tilt)) * max_arrow_len)
 
-    # Show image with detections.
+                end = (centerx + offset_x, centery + offset_y)
+                cv2.arrowedLine(img, center, end, (0, 0, 255), 2, line_type=cv2.LINE_AA)
 
-    cv2.imshow('Detections', img)
+        # Show image with detections.
 
-    if output_path != "-1":
-        writer.write(img)
+        if show == 'Y':
+            cv2.imshow('Detections', img)
 
-    # Get processing end time for the current frame.
-    frame_end = datetime.now()
+        if output_path != "-1":
+            writer.write(img)
 
-    # Calculate frametime.
-    total_time = frame_end - frame_start
+        # Get processing end time for the current frame.
+        frame_end = datetime.now()
 
-    # Calculate FPS at the current moment as the inverse of the frametime.
-    fps = 1 / total_time.total_seconds()
+        # Calculate frametime.
+        total_time = frame_end - frame_start
 
-    # Print for this frame the number of heads processed and the amount of FPS.
-    print("Heads: %d, FPS: %.2f" % (head_count, fps))
+        # Calculate FPS at the current moment as the inverse of the frametime.
+        fps = 1 / total_time.total_seconds()
 
-    # Update FPS mean.
-    fps_mean = fps_mean * (frame_count / (frame_count + 1)) + fps / (frame_count + 1)
+        # Print for this frame the number of heads processed and the amount of FPS.
+        print("Heads: %d, FPS: %.2f" % (head_count, fps))
 
-    # Update processed frame counter.
-    frame_count = frame_count + 1
+        # Update FPS mean.
+        fps_mean = fps_mean * (frame_count / (frame_count + 1)) + fps / (frame_count + 1)
 
-    # If 'Esc' key is pressed, exit.
-    if cv2.waitKey(1) == 27:
-        break
+        # Update processed frame counter.
+        frame_count = frame_count + 1
+
+        # If 'Esc' key is pressed, exit.
+        if show == 'Y' and cv2.waitKey(1) == 27:
+            break
+
+except KeyboardInterrupt:
+    pass
 
 # Before ending execution, show mean FPS value.
 print("FPS (avg): %.2f" % fps_mean)
+
+# Free video input.
+cam.release()
 
 # Destroy CV2 windows.
 cv2.destroyAllWindows()
