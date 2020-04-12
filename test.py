@@ -81,7 +81,12 @@ cam.set(cv2.CAP_PROP_SETTINGS, 1)
 
 output_path = input("Output file name: ")
 
+see_video = None
+
 if output_path != "-1":
+    while see_video != 'Y' and see_video != 'N':
+        see_video = input("See video while convert? (Y/N): ")
+
     writer = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'XVID'), cam.get(cv2.CAP_PROP_FPS), (ori_width, ori_height))
 
 # Set the value that controls if the picture should be flipped horizontally.
@@ -161,8 +166,8 @@ while out == True:
             cv2.arrowedLine(img, center, end, (0, 0, 255), 2, line_type=cv2.LINE_AA)
 
     # Show image with detections.
-
-    cv2.imshow('Detections', img)
+    if see_video == 'Y' or see_video == None:
+        cv2.imshow('Detections', img)
 
     if output_path != "-1":
         writer.write(img)
