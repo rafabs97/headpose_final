@@ -9,7 +9,7 @@ The pose estimator models developed on this project are based on the architectur
 M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutional neural networks and adaptive gradient methods. Pattern Recognition, 71, June 2017.
 ```
 
-**Old** code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm3jx4ke33/headpose_final.zip?dl=1).
+**Old** code for this project can be downloaded [here](https://www.dropbox.com/s/7s4tpcm3jx4ke33/headpose_final.zip?dl=1) (only for archiving reasons).
 
 ## Notes
 * In order to use this model, you **MUST** import ```models/keras_ssd512.py```, ```bounding_box_utils``` and ```keras_layers``` from the Keras implementation of Single-Shot Multibox Detector by Pierluigi Ferrari found [here](https://github.com/pierluigiferrari/ssd_keras). These files must be placed in the root of the cloned repository directory.
@@ -20,12 +20,26 @@ M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutio
   ```
   export PYTHONPATH=$PYTHONPATH:~/libs/headpose_final/:~/libs/headpose_final/models/
   ```
+  
+## Software requirements
+* OS: Ubuntu 16.04 or later (and derivatives), Windows 7 or later, macOS 10.12.6 or later (no GPU support).
+* Python: Version 3.7.6.
+* NVIDIA Software: GPU Drivers (410.x or later), CUDA (10.0) and cuDNN (7.4.1 or later for CUDA 10.0).
+* TensorFlow: with or without GPU support, versión 1.14.0.
+* Keras: Version 2.2.4.
+* OpenCV: Version 4.1.0.25.
+* Other Python libraries: glob2 (0.7), numpy (1.18.1), pandas (1.0.1), pillow (7.0.0), scikit-learn (0.22.2).
 
 ## Quick Start guide
 * Clone this repository to a directory of your choice.
 
   ```
   git clone https://github.com/rafabs97/headpose_final <directory>
+  ```
+* Install all required libraries. You can do this manually or using the requirements file included in this repository (**WARNING: Potentially outdated**).
+
+  ```
+  pip install -r <directory>/requirements.txt
   ```
 * Place ```models/keras_ssd512.py```, ```bounding_box_utils``` and ```keras_layers``` from [here](https://github.com/pierluigiferrari/ssd_keras) at the root of the cloned repository directory.
 * Place ```models/head-detector.mat``` from [here](https://github.com/AVAuco/ssd_people) on the ``models/`` directory on the root of the cloned repository directory.
@@ -48,15 +62,6 @@ The functions of the scripts contained are the following:
 * Script ``match_datasets.py`` can be used to naïvely extract a subset from a dataset appearing on a second dataset, based only on the tilt and pan head pose values (we have used it to match pictures from the AFLW dataset, as it should be rare to find repeating values in that dataset). 
 * We used script ``test_on_dataset.py`` to get the mean error of the models by
 Patacchiola et al. over the dataset obtained using the previous scripts.
-
-## Software requirements
-* OS: Ubuntu 16.04 or later (and derivatives), Windows 7 or later, macOS 10.12.6 or later (no GPU support).
-* Python: Version 3.6.
-* NVIDIA Software: GPU Drivers (410.x or later), CUDA (10.0) and cuDNN (7.4.1 or later for CUDA 10.0).
-* TensorFlow: with or without GPU support, versión 1.14.0.
-* Keras: Version 2.2.4.
-* OpenCV: Version 4.1.0.25.
-* Other Python libraries: glob2 (0.7), numpy (1.17.1), pandas (0.25.1), pillow (6.1.0), scikit-learn (0.21.3).
 
 ## Video demo
 
