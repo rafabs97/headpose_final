@@ -79,10 +79,11 @@ cam.set(cv2.CAP_PROP_SETTINGS, 1)
 
 # Set output file name, if it is to be recorded, or -1 if the output is to be discarded.
 
-output_path = input("Output file name: ")
+output_name = input("Output file name (without extension): ")
+output_path = output_name + '.mp4'
 
 if output_path != "-1":
-    writer = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'XVID'), cam.get(cv2.CAP_PROP_FPS), (ori_width, ori_height))
+    writer = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), cam.get(cv2.CAP_PROP_FPS), (ori_width, ori_height))
 
 # Set the value that controls if the picture should be flipped horizontally.
 
