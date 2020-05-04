@@ -65,7 +65,7 @@ Patacchiola et al. over the dataset obtained using the previous scripts.
 
 ## Video demo
 
-A video processed with this software can be found [here](https://youtu.be/sMPB2xXe8eY).
+A video processed with this software can be found [here](https://www.youtube.com/watch?v=DWieqJ6n1CM).
 
 ## Acknowledgements
 Picture used in demo by [Ross Broadstock](https://www.flickr.com/people/figurepainting/). Licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) license.
