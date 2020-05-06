@@ -109,6 +109,9 @@ else:
 out = True
 
 frame_count = 0
+heads_mean = 0
+detection_mean = 0
+estimation_mean = 0
 fps_mean = 0
 
 # While there is a frame from the video stream:
@@ -131,7 +134,14 @@ try:
             img = cv2.flip(img, 1)
 
         # Get bounding boxes for every detected head in the picture.
+
+        detection_start = datetime.now()
         bboxes = get_head_bboxes(img, head_detector, confidence_threshold)
+        detection_end = datetime.now()
+
+        # Calculate time used in head detection.
+
+        detection_time = (detection_end - detection_start).total_seconds()
 
         # Get cropped pics for every valid bounding box.
         gray_pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -139,6 +149,9 @@ try:
 
         # Initialize head counter.
         head_count = 0
+
+        # Reset estimation time.
+        estimation_time = 0
 
         # For each cropped picture:
         for i in range(len(heads)):
@@ -150,8 +163,16 @@ try:
                 head_count = head_count + 1
 
                 # Get pose values.
+
+                estimation_start = datetime.now()
+
                 tilt, pan = get_pose(heads[i], pose_estimator, img_norm = [mean, std], tilt_norm = [t_mean, t_std],
                                      pan_norm = [p_mean, p_std], rescale=90.0)
+
+                estimation_end = datetime.now()
+
+                # Update total time used in pose estimation.
+                estimation_time = estimation_time + (estimation_end - estimation_start).total_seconds()
 
                 # Get minimum and maximum values for both axes of the bounding box.
                 xmin, ymin, xmax, ymax = bboxes[i]
@@ -193,7 +214,16 @@ try:
         fps = 1 / total_time.total_seconds()
 
         # Print for this frame the number of heads processed and the amount of FPS.
-        print("Heads: %d, FPS: %.2f" % (head_count, fps))
+        print("Frame %d. Heads: %d, Detection: %fs, Estimation: %fs, FPS: %.2f" % (frame_count + 1, head_count, detection_time, estimation_time, fps))
+
+        # Update head count mean.
+        heads_mean = heads_mean * (frame_count / (frame_count + 1)) + head_count / (frame_count + 1)
+
+        # Update detection time mean.
+        detection_mean = detection_mean * (frame_count / (frame_count + 1)) + detection_time / (frame_count + 1)
+
+        # Update estimation time mean.
+        estimation_mean = estimation_mean * (frame_count / (frame_count + 1)) + estimation_time / (frame_count + 1)
 
         # Update FPS mean.
         fps_mean = fps_mean * (frame_count / (frame_count + 1)) + fps / (frame_count + 1)
@@ -209,7 +239,8 @@ except KeyboardInterrupt:
     pass
 
 # Before ending execution, show mean FPS value.
-print("FPS (avg): %.2f" % fps_mean)
+print("AVGs.")
+print("Heads: %d, Detection: %fs, Estimation: %fs, FPS: %.2f" % (heads_mean, detection_mean, estimation_mean, fps_mean))
 
 # Free video input.
 cam.release()
