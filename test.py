@@ -216,17 +216,20 @@ try:
         # Print for this frame the number of heads processed and the amount of FPS.
         print("Frame %d. Heads: %d, Detection: %fs, Estimation: %fs, FPS: %.2f" % (frame_count + 1, head_count, detection_time, estimation_time, fps))
 
-        # Update head count mean.
-        heads_mean = heads_mean * (frame_count / (frame_count + 1)) + head_count / (frame_count + 1)
+        # Discard first frame when calculating performance metrics.
+        if frame_count != 0:
 
-        # Update detection time mean.
-        detection_mean = detection_mean * (frame_count / (frame_count + 1)) + detection_time / (frame_count + 1)
+            # Update head count mean.
+            heads_mean = heads_mean * ((frame_count - 1) / frame_count) + head_count / frame_count
 
-        # Update estimation time mean.
-        estimation_mean = estimation_mean * (frame_count / (frame_count + 1)) + estimation_time / (frame_count + 1)
+            # Update detection time mean.
+            detection_mean = detection_mean * ((frame_count - 1) / frame_count) + detection_time / frame_count
 
-        # Update FPS mean.
-        fps_mean = fps_mean * (frame_count / (frame_count + 1)) + fps / (frame_count + 1)
+            # Update estimation time mean.
+            estimation_mean = estimation_mean * ((frame_count - 1) / frame_count) + estimation_time / frame_count
+
+            # Update FPS mean.
+            fps_mean = fps_mean * ((frame_count - 1) / frame_count) + fps / frame_count
 
         # Update processed frame counter.
         frame_count = frame_count + 1
