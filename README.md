@@ -1,4 +1,4 @@
-RealHePoNet: a head pose estimator network for real-world applications
+RealHePoNet: a head pose estimator network for real-world applications.
 ======================================================
 ![detections](https://github.com/rafabs97/headpose_final/blob/master/sample_detecions.png)
 
