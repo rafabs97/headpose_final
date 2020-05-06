@@ -242,8 +242,7 @@ except KeyboardInterrupt:
     pass
 
 # Before ending execution, show mean FPS value.
-print("AVGs.")
-print("Heads: %d, Detection: %fs, Estimation: %fs, FPS: %.2f" % (heads_mean, detection_mean, estimation_mean, fps_mean))
+print("Average. Heads: %d, Detection: %fs, Estimation: %fs, FPS: %.2f" % (heads_mean, detection_mean, estimation_mean, fps_mean))
 
 # Free video input.
 cam.release()
