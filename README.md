@@ -2,8 +2,8 @@ RealHePoNet: a head pose estimator network for real-world applications.
 ======================================================
 ![detections](https://github.com/rafabs97/headpose_final/blob/master/sample_detecions.png)
 
-Work by Rafael Berral-Soler, directed by Manuel J. Marin-Jimenez and Francisco J. Madrid-Cuevas. 
-The pose estimator models developed on this project are based on the architectures on the following article:
+Work by Rafael Berral-Soler, directed by Manuel J. Marin-Jimenez, Francisco J. Madrid-Cuevas and Rafael Muñoz-Salinas. 
+The pose estimator models developed on this project are compared with the architectures on the following article:
 
 ```
 M. Patacchiola y A. Cangelosi. Head pose estimation in the wild using convolutional neural networks and adaptive gradient methods. Pattern Recognition, 71, June 2017.
@@ -65,7 +65,12 @@ Patacchiola et al. over the dataset obtained using the previous scripts.
 
 ## Video demo
 
-A video processed with this software can be found [here](https://www.youtube.com/watch?v=DWieqJ6n1CM).
+Qualitative results obtained with this software can be found in the following [video](https://www.youtube.com/watch?v=2UeuXh5DjAE).
+<div align="center">
+    <a href="https://www.youtube.com/watch?v=2UeuXh5DjAE" alt="RealHePoNet demo video" target="_blank">
+        <img src="figs/youtubesamples.png" height="280">
+    </a>
+</div>
 
 ## Acknowledgements
 Picture used in demo by [Ross Broadstock](https://www.flickr.com/people/figurepainting/). Licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) license.
