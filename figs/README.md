@@ -1,0 +1,1 @@
+Placeholder for useful images
