@@ -14,9 +14,9 @@ import os
 dataset_dir = 'clean/aflw_pointing04/'
 
 source_csv_file = 'test.csv'
-destination_csv_file = 'aflw_test.csv'
+destination_csv_file = 'test_aflw.csv'
 
-destination_npy_file = 'aflw_test_img.npy'
+destination_npy_file = 'test_aflw_img.npy'
 
 source_csv = dataset_dir + source_csv_file
 
