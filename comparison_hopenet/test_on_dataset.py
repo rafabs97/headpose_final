@@ -26,9 +26,9 @@ import hopenet
 
 # Paths.
 
-dataset_dir = '../clean/aflw_large_color/'
-csv_file = 'aflw_test.csv'
-npy_file = 'aflw_test_img.npy'
+dataset_dir = '../clean/aflw_dockerface_c/'
+csv_file = 'labels.csv'
+npy_file = 'img.npy'
 
 dataset_csv = dataset_dir + csv_file
 dataset_npy = dataset_dir + npy_file
