@@ -69,8 +69,9 @@ Additionally, we have included 2 scripts in order to test and compare the perfor
 * Download one of the models from [the Hopenet repository](https://github.com/natanielruiz/deep-head-pose) (stored on Google Drive); place it on the ``models/`` directory on the root of the cloned repository directory.
 
 The scripts are the following:
-* Script ``test_on_image_hopenet.py`` allows to get a demo prediction using the Hopenet model, and show it on screen. 
-* We used script ``test_on_dataset.py`` to get the mean error of the Hopenet model over the dataset obtained using the previous scripts.
+* Script ``test_on_image_hopenet.py`` allows to get a demo prediction using the Hopenet model, and show it on screen.
+* Script ``match_datasets.py`` performs the same function as in the previous comparison, but it has been modified to be compatible with [the Dockerface detector](https://github.com/natanielruiz/dockerface) output. 
+* We used script ``test_on_dataset.py`` to get the mean error of the Hopenet model over the datasets obtained using the previous scripts.
 
 ## Video demo
 
