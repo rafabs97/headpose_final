@@ -103,6 +103,8 @@ def clean_aflw(aflw_dir, aflw_mat, destination_dir, detector, confidence_thresho
         before:
         '''
 
+        id = values[tuple_index][0]
+
         while (tuple_index + i) < len(mat['fileids']) and values[tuple_index + i][0] == id:
             p_count = p_count + 1
             true_bboxes.append(values[tuple_index + i][1])
