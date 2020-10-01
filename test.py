@@ -82,7 +82,7 @@ cam.set(cv2.CAP_PROP_SETTINGS, 1)
 output_name = input("Output file name (without extension): ")
 output_path = output_name + '.mp4'
 
-if output_path != "-1":
+if output_name != "-1":
     writer = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), cam.get(cv2.CAP_PROP_FPS), (ori_width, ori_height))
 
 # Set the value that controls if the picture should be flipped horizontally.
@@ -201,7 +201,7 @@ try:
         if show == 'Y':
             cv2.imshow('Detections', img)
 
-        if output_path != "-1":
+        if output_name != "-1":
             writer.write(img)
 
         # Get processing end time for the current frame.
