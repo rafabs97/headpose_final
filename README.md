@@ -1,8 +1,21 @@
-RealHePoNet: a head pose estimator network for real-world applications.
+RealHePoNet: a robust single-stage ConvNet for head pose estimation in the wild.
 ======================================================
 ![detections](https://github.com/rafabs97/headpose_final/blob/master/sample_detecions.png)
 
-Work by Rafael Berral-Soler, directed by Manuel J. Marin-Jimenez, Francisco J. Madrid-Cuevas and Rafael Muñoz-Salinas. 
+Work by Rafael Berral-Soler, directed by Manuel J. Marin-Jimenez, Francisco J. Madrid-Cuevas and Rafael Muñoz-Salinas. If you find useful this code, please, cite the following [paper](https://arxiv.org/abs/2011.01890):
+```
+@misc{berral2020realheponet,
+      title={RealHePoNet: a robust single-stage ConvNet for head pose estimation in the wild}, 
+      author={Rafael Berral-Soler and Francisco J. Madrid-Cuevas and Rafael Mu\~noz-Salinas and Manuel J. Mar\'in-Jim\'enez},
+      year={2020},
+      eprint={2011.01890},
+      archivePrefix={arXiv},
+      note={Accepted for publication at NCAA},
+      primaryClass={cs.CV}
+}
+```
+
+
 The pose estimator models developed on this project are compared with the architectures on the following article:
 
 ```
