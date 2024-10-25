@@ -43,7 +43,7 @@ termcolor==1.1.0
 typed-ast==1.4.1
 urllib3==1.25.8
 virtualenv==20.0.7
-Werkzeug==1.0.0
+Werkzeug==3.0.6
 wrapt==1.12.0
 yarg==0.1.9
 zipp==3.0.0
